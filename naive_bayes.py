@@ -49,9 +49,34 @@ Main function for training and predicting with naive bayes.
 """
 def naive_bayes(train_set, train_labels, dev_set, laplace=1.0, pos_prior=0.5, silently=False):
     print_values(laplace,pos_prior)
+    
+    count_positive = Counter()
+    count_negative = Counter()
 
+    for review, label in zip(train_set, train_labels):
+        if label == 1:
+            count_positive.update(review)
+        else:
+            count_negative.update(review)
+    total_count_positive = sum(count_positive.values())
+    total_count_negative = sum(count_negative.values())
+    vocabulary_positive = set(count_positive.keys())
+    vocabulary_negative = set(count_negative.keys())
+    vocabulary_combined = vocabulary_positive.union(vocabulary_negative)
+    total_unique_words = len(vocabulary_combined)
     yhats = []
     for doc in tqdm(dev_set, disable=silently):
-        yhats.append(-1)
-
+        positive_log = math.log(pos_prior)
+        negative_log = math.log(1 - pos_prior)
+        for word in doc:
+            positive_log += math.log(
+                (count_positive.get(word, 0) + laplace) / (total_count_positive + laplace)
+            )
+            negative_log += math.log(
+                (count_negative.get(word, 0) + laplace) / (total_count_negative + laplace)
+            )
+        if (positive_log > negative_log):
+            yhats.append(1)
+        else:
+            yhats.append(0)
     return yhats
