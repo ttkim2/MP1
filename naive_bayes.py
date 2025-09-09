@@ -70,10 +70,10 @@ def naive_bayes(train_set, train_labels, dev_set, laplace=1.0, pos_prior=0.5, si
         negative_log = math.log(1 - pos_prior)
         for word in doc:
             positive_log += math.log(
-                (count_positive.get(word, 0) + laplace) / (total_count_positive + laplace)
+                (count_positive.get(word, 0) + laplace) / (total_count_positive + laplace*total_unique_words)
             )
             negative_log += math.log(
-                (count_negative.get(word, 0) + laplace) / (total_count_negative + laplace)
+                (count_negative.get(word, 0) + laplace) / (total_count_negative + laplace*total_unique_words)
             )
         if (positive_log > negative_log):
             yhats.append(1)
