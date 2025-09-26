@@ -11,7 +11,7 @@ def astar_search(starting_state):
     Return:
         A path consisting of a list of SearchState states
         The first state should be starting_state
-        The last state should have state.is_goal() == True
+        The last state should have state.goal_test()() == True
     '''
     # we will use this visited_states dictionary to serve multiple purposes
     # - visited_states[state] = (parent_state, distance_of_state_from_start)
@@ -37,7 +37,7 @@ def astar_search(starting_state):
     # Your code here ---------------
     while frontier:
         current = heapq.heappop(frontier)
-        if current.is_goal() == True:
+        if current.goal_test() == True:
             return reconstruct_path(visited_states, current)
         current_g = visited_states[current][1]
         for neighbor in current.generate_successors():
