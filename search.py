@@ -36,17 +36,16 @@ def astar_search(starting_state):
     #       - then call backtrack(visited_states, state)...
     # Your code here ---------------
     while frontier:
-        current_f, current = heapq.heappop(frontier)
+        current = heapq.heappop(frontier)
         if current.goal_test() == True:
             return reconstruct_path(visited_states, current)
         current_g = visited_states[current][1]
         for neighbor in current.generate_successors():
-            g_new = current_g + neighbor.getcost():
+            g_new = current_g + 1
             previous = visited_states.get(neighbor)
             if (previous is None or g_new < previous[1]):
                 visited_states[neighbor] = (current, g_new)
-                f_new = g_new + neighbor.get_heuristic()
-                heapq.heappush(frontier, (f_new,neighbor)
+                heapq.heappush(frontier, neighbor)
     # ------------------------------
     # if you do not find the goal return an empty list
     return []
