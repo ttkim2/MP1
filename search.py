@@ -46,7 +46,7 @@ def astar_search(starting_state):
             if previous is None or g_new < previous[1]:
                 visited_states[neighbor] = (current, g_new)
 
-                f_new = g_new + neighbor.get_heuristic()
+                f_new = g_new + neighbor.calculate_heuristic()
                 heapq.heappush(frontier, (f_new, neighbor))
     # ------------------------------
     # if you do not find the goal return an empty list
