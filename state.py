@@ -185,19 +185,21 @@ class EightPuzzleState(SearchState):
             for j in range(3):
                 tile = self.current_state[i][j]
                 if tile != 0:
-                    goal_i = positions[tile[i]]
-                    goal_j = positions[tile[j]]
+                    goal_i, goal_j = positions[tile[i][j]]
                     total += grid_distance((i,j), (goal_i, goal_j))
         return total
     
     # TODO(IV): implement this method
     # Hint: it should be identical to what you wrote in WordLadder.__lt__(self, other)
     def __lt__(self, other):
-        pass
+        f = self.path_cost + other.heuristic_value
+        g_h = other.path_cost + other.heuristic_value
+        if f == g_h:
+            return self.creation_order < other.creation_order
+        return f < g_h
     
     # str and repr just make output more readable when you print out states
     def __str__(self):
         return str(self.current_state)
     def __repr__(self):
         return "\n".join([" ".join([str(c) for c in row]) for row in self.current_state])
-    
