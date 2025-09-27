@@ -41,7 +41,7 @@ def astar_search(starting_state):
             return reconstruct_path(visited_states, current)
         current_g = visited_states[current][1]
         for neighbor in current.generate_successors():
-            g_new = current_g + neighbor.path_cost()
+            g_new = current_g + neighbor.path_cost
             previous = visited_states.get(neighbor)
             if previous is None or g_new < previous[1]:
                 visited_states[neighbor] = (current, g_new)
