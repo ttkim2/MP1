@@ -36,7 +36,7 @@ def astar_search(starting_state):
     #       - then call backtrack(visited_states, state)...
     # Your code here ---------------
     while frontier:
-        current_f, current = heapq.heappop(frontier)
+        current = heapq.heappop(frontier)
         if current.goal_test() == True:
             return reconstruct_path(visited_states, current)
         current_g = visited_states[current][1]
